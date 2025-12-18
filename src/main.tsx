@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
     <List />
     <App />
     <Ract />
-    <Button name="Pavan Button" alias="chitti" age={26} isMale={true} hobbies={["Gaming", "Music", "Sports"]}/>
+    <Button name="Pavan Button" alias="chitti" age={26} hobbies={["Gaming", "Music", "Sports"]}/>
     <But />
     <ButtonWithouttsx />
   </StrictMode>,
