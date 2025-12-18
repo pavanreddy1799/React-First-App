@@ -7,6 +7,8 @@ export const List = () => {
         id: 3, name: 'Product 3', price: 300
     },{
         id: 4, name: 'Product 4', price: 400
+    },{
+        id: 5, name: 'Product 5', price: 500
     }];
     return (
         <div>
