@@ -1,6 +1,6 @@
 import React from "react"
 
-function Button(props : any) {
+function Button(props : {name: string, alias: string, age: number, hobbies: string[]}) {
   return <><h1>{props.name}</h1>
         <h2>{props.alias}</h2>
         <h3>{props.age}</h3>
