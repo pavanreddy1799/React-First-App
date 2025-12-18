@@ -1,0 +1,187 @@
+Rules of JSX:
+
+1: There should be a parent tag enclosed with multiple tags in JSX
+Reach has React.Fragment tag to make as parent tag shortly (<>, </>)
+
+<> or <React.Fragment>
+    <h1>Test</h1>
+    <p>Test Paragraph</p>
+</> or </React.Fragment>
+
+2: Every single tag must be properly closed
+Even the ones that don't need closing tags in HTML like input tag, break tag
+
+<input id="test" type="text" /> -- /> this is closing tag
+
+3: Attribute names must be written in camelCase
+Examples: for class use className, for "for" use htmlFor, for tabindex use tabindex
+
+4: you can embed javascript expression directly in markup using curly braces
+export const RuleFour = () {
+    const name = "Pavan";
+    const age = 26;
+    const isMale = true;
+
+    return {
+        <>
+            <h1>{name}</h1>
+            <h2>I am {age} years old.</h2>
+            <h3>Gender: {isMale ? "Male" : "Female"}</h3>
+            <h4>{name.toLowerCase().replace(" ","_")}@email.com</h4>
+        </>
+    }
+}
+
+props:
+props is short for properties
+props are the way components talk to each other
+They are like arguments to a function
+a parent component pass data down to children through props
+You pass them when you invoke a component
+You access them in a component using "props" object
+You can pass any javascript value, including functions, arrays, objects, and JSX
+
+<Button name="Pavan Button" alias="chitti" age={26} isMale={true} hobbies={["Gaming", "Music", "Sports"]}/>
+
+function Button(props: {name: string, alias: string, age: number, isMale: boolean, hobbies: string[]}) {
+    or
+function Button({name, alias, age, isMale, hobbies})
+    or
+function Button(props) {
+  return <><h1>{props.name}</h1>
+        <h2>{props.alias}</h2>
+        <h3>{props.age}</h3>
+        <h4>{props.hobbies.join(", ")}</h4>
+        </>
+}
+
+Props Patterns:
+1: Default props 
+ - the default value is only used if the prop is missing or if you pass undefined
+ - If you pass null or 0, the default value won't be used
+
+export const Profile = ({ name = "test", age = 26 }) => {
+    return {
+        <>
+            <h2>My Name is {name} and my age is {age}</h2>
+        </>
+    }
+}
+
+2: forwarding props with spread operator
+suppose we have to pass props of one component directly to the child component props
+
+export const UserData = (props) => {
+    return {
+        <div>
+            <UserInfo {...props} />
+        </div>
+    }
+}
+
+--when we want to ignore any props and send rest of props
+export const UserData = ({id, ...rest}) => {
+    return {
+        <div>
+            <h2>User {id} Details </h2>
+            <UserInfo {...rest} />
+        </div>
+    }
+}
+
+3: Passing JSX as children
+ - In HTML, its natural to nest elements inside each other
+ - In React, we can do the exact same thing with components
+ - Layouts, cards, Modals etc.,
+ - Nested content can be sent to childComponent with keyword "children"
+
+export const ParentComponent = () => {
+    return {
+        <>
+            <ChildComponent name="My Name">
+                <p>Test 1</p>
+                <p>Test 2</p>
+                <UserComponent />
+            </ChildComponent>
+        </>
+    }
+}
+
+export const ChildComponent = ({name, children}) => {
+    return {
+        <>
+            <h1>My Name is {name}</h1>
+            <div>{children}</div>
+        </>
+    }
+}
+
+Conditional Rendering:
+1: If statement
+
+export const UserDetails = ({ name, isOnline, hideOffline }) => {
+    if(hideOffline && !isOnline){
+        return null;
+    }
+
+    if(isOnline){
+        return {
+            <div>
+                <h1>{name}</h1>
+                <p>is Available</p>
+            </div>
+        }
+    }
+
+    return {
+        <div>
+            <h1>{name}</h1>
+            <p>is not Available</p>
+        </div>
+    }
+}
+
+2: The Ternary Operator:
+
+export const UserDetails = ({ name, isOnline}) => {
+    return {
+        <>
+            <h1>{name}</h1>
+            <div>{isOnline ? "is Available" : "is not Available"}</div>
+            {
+                isOnline ? {
+                    <button>Send Message</button>
+                } : {
+                    <button>Sign in</button>
+                }
+            }
+        </>
+    }
+}
+
+3: AND Operator (&&)
+
+export const UserDetails = ({ name, isPremium, isNewUser}) => {
+    return {
+        <>
+            <h1>
+                {name}
+                {isPremium && <span>*</span>}
+                {isNewUser && <span>^</span>}
+            </h1>
+        </>
+    }
+}
+
+4: Variables for complex logic
+
+if(role == "admin"){
+    roleBadge = "Admin"
+} else if (role == "VIP"){
+    roleBadge = "VIP"
+}else {
+    roleBadge = "User"
+}
+
+5: Activity Component (React > 19.2 Version)
+
